@@ -1,7 +1,7 @@
 const pokemonCatch = async() => {
     try {
-    const pokemonDog = await fetch('https:pokeapi.co/api/v2/pokemon');
-    const pokemonData = await pokemonDog.json()
+    const dog = await fetch('https:pokeapi.co/api/v2/pokemon');
+    const pokemonData = await dog.json()
     const pokemonTotal = pokemonData.results;
     return pokemonTotal;
     }
@@ -17,20 +17,30 @@ const pokemonRenderAll = async () => {
   
     const listName = listData.map((array) => {
         const a1 = array.url.split(`/`);
-        const a2 = a1[6];
-        return `<a href=" data-link-num="${a2}"><li>${array.name}</li></a>`
-    }).join('');
-    document.querySelector(`ul`).innerHTML = `${listName}`;
+        
+        const pokemonUl = document.querySelector(`ul`);
+        const pokemonLi = document.createElement(`li`); 
+
+        pokemonLi.innerHTML = a1[6].height;
+        pokemonUl.appendChild(pokemonLi);
+
+        return `<li>${array.name}</li>`
+    }).join('');    // This removes the commas. 
+
+    document.querySelector(`ul`).innerHTML = `${listName}`; // This defines each <li>
+
+    const button = document.querySelector(`li`);
+    const callButton = () => {
+        console.log(`button confirmed`);
+    }
+    
+    button.addEventListener(`click`, callButton);
+    
 }
 
-const pokemonDetailsDisplay = async () => {
-    const selectLink = document.querySelectorAll('a')
-    console.log(selectLink)
-};
 
-const init = async () => {
+const pokemonShowMulti = async () => {
     await pokemonRenderAll();
-    await pokemonDetailsDisplay();
 }
 
-init()
+pokemonShowMulti()
